@@ -1,0 +1,608 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="theme-color" content="#2563eb">
+    <meta name="description" content="Sistem Inventaris Ruangan berbasis Progressive Web App">
+
+    <title>Inventaris Ruangan</title>
+
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="icons/icon-192.png">
+
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+</head>
+
+<body>
+
+    <!-- =========================
+         SIDEBAR
+    ========================== -->
+    <aside class="sidebar" id="sidebar">
+
+        <div class="logo">
+            <div class="logo-icon">
+                <i class="fa-solid fa-boxes-stacked"></i>
+            </div>
+
+            <div>
+                <h2>Inventaris</h2>
+                <span>Ruangan</span>
+            </div>
+        </div>
+
+        <nav class="menu">
+
+            <a href="#dashboard" class="menu-link active">
+                <i class="fa-solid fa-chart-pie"></i>
+                <span>Dashboard</span>
+            </a>
+
+            <a href="#inventaris" class="menu-link">
+                <i class="fa-solid fa-box"></i>
+                <span>Inventaris</span>
+            </a>
+
+            <a href="#tambah" class="menu-link">
+                <i class="fa-solid fa-plus"></i>
+                <span>Tambah Barang</span>
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+            <button id="installBtn" class="install-btn hidden">
+                <i class="fa-solid fa-download"></i>
+                Install Aplikasi
+            </button>
+
+            <button id="darkModeBtn" class="sidebar-btn">
+                <i class="fa-solid fa-moon"></i>
+                <span>Dark Mode</span>
+            </button>
+        </div>
+
+    </aside>
+
+
+    <!-- =========================
+         MAIN
+    ========================== -->
+    <main class="main-content">
+
+        <!-- HEADER -->
+        <header class="topbar">
+
+            <button class="mobile-menu" id="mobileMenu">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <div>
+                <h1 id="pageTitle">Dashboard</h1>
+                <p>Sistem Inventaris Ruangan</p>
+            </div>
+
+            <div class="topbar-actions">
+                <button id="addQuickBtn" class="primary-btn">
+                    <i class="fa-solid fa-plus"></i>
+                    Tambah Barang
+                </button>
+            </div>
+
+        </header>
+
+
+        <!-- =========================
+             DASHBOARD
+        ========================== -->
+        <section id="dashboard" class="page-section">
+
+            <div class="welcome">
+                <div>
+                    <h2>Selamat Datang 👋</h2>
+                    <p>
+                        Kelola data inventaris ruangan dengan mudah.
+                    </p>
+                </div>
+
+                <i class="fa-solid fa-warehouse"></i>
+            </div>
+
+
+            <!-- STATISTICS -->
+            <div class="stats-grid">
+
+                <div class="stat-card">
+                    <div class="stat-icon blue">
+                        <i class="fa-solid fa-boxes-stacked"></i>
+                    </div>
+
+                    <div>
+                        <span>Total Barang</span>
+                        <h3 id="totalBarang">0</h3>
+                    </div>
+                </div>
+
+
+                <div class="stat-card">
+                    <div class="stat-icon green">
+                        <i class="fa-solid fa-circle-check"></i>
+                    </div>
+
+                    <div>
+                        <span>Kondisi Baik</span>
+                        <h3 id="barangBaik">0</h3>
+                    </div>
+                </div>
+
+
+                <div class="stat-card">
+                    <div class="stat-icon orange">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                    </div>
+
+                    <div>
+                        <span>Rusak Ringan</span>
+                        <h3 id="barangRingan">0</h3>
+                    </div>
+                </div>
+
+
+                <div class="stat-card">
+                    <div class="stat-icon red">
+                        <i class="fa-solid fa-circle-xmark"></i>
+                    </div>
+
+                    <div>
+                        <span>Rusak Berat</span>
+                        <h3 id="barangBerat">0</h3>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!-- STATISTIK KONDISI -->
+            <div class="dashboard-grid">
+
+                <div class="panel">
+                    <div class="panel-header">
+                        <div>
+                            <h3>Statistik Kondisi</h3>
+                            <p>Persentase kondisi barang</p>
+                        </div>
+                    </div>
+
+                    <div class="chart-container">
+
+                        <div class="chart-circle" id="chartCircle">
+                            <div>
+                                <strong id="chartTotal">0</strong>
+                                <span>Barang</span>
+                            </div>
+                        </div>
+
+                        <div class="chart-info">
+
+                            <div>
+                                <span class="dot green-dot"></span>
+                                <span>Baik</span>
+                                <strong id="percentBaik">0%</strong>
+                            </div>
+
+                            <div>
+                                <span class="dot orange-dot"></span>
+                                <span>Rusak Ringan</span>
+                                <strong id="percentRingan">0%</strong>
+                            </div>
+
+                            <div>
+                                <span class="dot red-dot"></span>
+                                <span>Rusak Berat</span>
+                                <strong id="percentBerat">0%</strong>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <!-- INFO PWA -->
+                <div class="panel">
+                    <div class="panel-header">
+                        <div>
+                            <h3>Informasi Aplikasi</h3>
+                            <p>Progressive Web App</p>
+                        </div>
+
+                        <i class="fa-solid fa-mobile-screen-button"></i>
+                    </div>
+
+                    <div class="pwa-info">
+
+                        <div>
+                            <i class="fa-solid fa-database"></i>
+
+                            <div>
+                                <strong>LocalStorage</strong>
+                                <span>Data tersimpan di perangkat</span>
+                            </div>
+                        </div>
+
+                        <div>
+                            <i class="fa-solid fa-wifi"></i>
+
+                            <div>
+                                <strong>Offline</strong>
+                                <span>Dapat digunakan tanpa internet</span>
+                            </div>
+                        </div>
+
+                        <div>
+                            <i class="fa-solid fa-download"></i>
+
+                            <div>
+                                <strong>Installable</strong>
+                                <span>Dapat dipasang ke Home Screen</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             INVENTARIS
+        ========================== -->
+        <section id="inventaris" class="page-section">
+
+            <div class="section-heading">
+                <div>
+                    <h2>Daftar Inventaris</h2>
+                    <p>Kelola seluruh data barang.</p>
+                </div>
+
+                <button id="addInventoryBtn" class="primary-btn">
+                    <i class="fa-solid fa-plus"></i>
+                    Tambah Barang
+                </button>
+            </div>
+
+
+            <!-- FILTER -->
+            <div class="filter-panel">
+
+                <div class="search-box">
+                    <i class="fa-solid fa-search"></i>
+                    <input
+                        type="text"
+                        id="searchInput"
+                        placeholder="Cari nama barang atau kode inventaris..."
+                    >
+                </div>
+
+                <select id="roomFilter">
+                    <option value="all">Semua Ruangan</option>
+                </select>
+
+                <select id="conditionFilter">
+                    <option value="all">Semua Kondisi</option>
+                    <option value="Baik">Baik</option>
+                    <option value="Rusak Ringan">Rusak Ringan</option>
+                    <option value="Rusak Berat">Rusak Berat</option>
+                </select>
+
+            </div>
+
+
+            <!-- ACTION DATA -->
+            <div class="data-actions">
+
+                <button id="exportBtn" class="secondary-btn">
+                    <i class="fa-solid fa-file-export"></i>
+                    Export
+                </button>
+
+                <label class="secondary-btn import-label">
+                    <i class="fa-solid fa-file-import"></i>
+                    Import
+                    <input
+                        type="file"
+                        id="importInput"
+                        accept=".json"
+                        hidden
+                    >
+                </label>
+
+                <button id="backupBtn" class="secondary-btn">
+                    <i class="fa-solid fa-download"></i>
+                    Backup
+                </button>
+
+                <label class="secondary-btn import-label">
+                    <i class="fa-solid fa-upload"></i>
+                    Restore
+                    <input
+                        type="file"
+                        id="restoreInput"
+                        accept=".json"
+                        hidden
+                    >
+                </label>
+
+                <button id="deleteAllBtn" class="danger-outline-btn">
+                    <i class="fa-solid fa-trash"></i>
+                    Hapus Semua
+                </button>
+
+            </div>
+
+
+            <!-- LIST -->
+            <div id="inventoryList" class="inventory-grid"></div>
+
+
+            <!-- EMPTY -->
+            <div id="emptyState" class="empty-state hidden">
+
+                <i class="fa-solid fa-box-open"></i>
+
+                <h3>Belum Ada Data</h3>
+
+                <p>
+                    Belum ada barang yang tersimpan.
+                    Silakan tambahkan data inventaris.
+                </p>
+
+                <button class="primary-btn" id="emptyAddBtn">
+                    <i class="fa-solid fa-plus"></i>
+                    Tambah Barang
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             FORM TAMBAH / EDIT
+        ========================== -->
+        <section id="tambah" class="page-section">
+
+            <div class="section-heading">
+                <div>
+                    <h2 id="formTitle">Tambah Inventaris</h2>
+                    <p>Masukkan informasi barang.</p>
+                </div>
+            </div>
+
+
+            <div class="form-panel">
+
+                <form id="inventoryForm">
+
+                    <input type="hidden" id="editId">
+
+                    <div class="form-grid">
+
+                        <div class="form-group">
+                            <label for="namaBarang">
+                                Nama Barang
+                            </label>
+
+                            <div class="input-wrapper">
+                                <i class="fa-solid fa-box"></i>
+
+                                <input
+                                    type="text"
+                                    id="namaBarang"
+                                    placeholder="Contoh: Komputer"
+                                    required
+                                >
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="kodeInventaris">
+                                Kode Inventaris
+                            </label>
+
+                            <div class="input-wrapper">
+                                <i class="fa-solid fa-barcode"></i>
+
+                                <input
+                                    type="text"
+                                    id="kodeInventaris"
+                                    placeholder="Contoh: INV-001"
+                                    required
+                                >
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="namaRuangan">
+                                Nama Ruangan
+                            </label>
+
+                            <div class="input-wrapper">
+                                <i class="fa-solid fa-door-open"></i>
+
+                                <input
+                                    type="text"
+                                    id="namaRuangan"
+                                    placeholder="Contoh: Lab Komputer"
+                                    required
+                                >
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="jumlahBarang">
+                                Jumlah Barang
+                            </label>
+
+                            <div class="input-wrapper">
+                                <i class="fa-solid fa-layer-group"></i>
+
+                                <input
+                                    type="number"
+                                    id="jumlahBarang"
+                                    min="1"
+                                    placeholder="Contoh: 10"
+                                    required
+                                >
+                            </div>
+                        </div>
+
+
+                        <div class="form-group full-width">
+                            <label for="kondisiBarang">
+                                Kondisi Barang
+                            </label>
+
+                            <div class="input-wrapper">
+                                <i class="fa-solid fa-clipboard-check"></i>
+
+                                <select id="kondisiBarang" required>
+                                    <option value="">
+                                        Pilih kondisi
+                                    </option>
+
+                                    <option value="Baik">
+                                        Baik
+                                    </option>
+
+                                    <option value="Rusak Ringan">
+                                        Rusak Ringan
+                                    </option>
+
+                                    <option value="Rusak Berat">
+                                        Rusak Berat
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-buttons">
+
+                        <button
+                            type="button"
+                            id="cancelEditBtn"
+                            class="secondary-btn"
+                        >
+                            <i class="fa-solid fa-xmark"></i>
+                            Batal
+                        </button>
+
+                        <button
+                            type="submit"
+                            class="primary-btn"
+                        >
+                            <i class="fa-solid fa-save"></i>
+                            <span id="submitText">
+                                Simpan Barang
+                            </span>
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </section>
+
+
+        <!-- FOOTER -->
+        <footer>
+            <p>
+                © 2026 Sistem Inventaris Ruangan
+            </p>
+
+            <span>
+                Progressive Web App
+            </span>
+        </footer>
+
+    </main>
+
+
+    <!-- =========================
+         MODAL KONFIRMASI
+    ========================== -->
+    <div id="confirmModal" class="modal hidden">
+
+        <div class="modal-content">
+
+            <div class="modal-icon danger">
+                <i class="fa-solid fa-trash"></i>
+            </div>
+
+            <h3>Konfirmasi Penghapusan</h3>
+
+            <p id="confirmMessage">
+                Apakah Anda yakin ingin menghapus data ini?
+            </p>
+
+            <div class="modal-buttons">
+
+                <button
+                    id="cancelDeleteBtn"
+                    class="secondary-btn"
+                >
+                    Batal
+                </button>
+
+                <button
+                    id="confirmDeleteBtn"
+                    class="danger-btn"
+                >
+                    Hapus
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         TOAST
+    ========================== -->
+    <div id="toast" class="toast">
+
+        <i id="toastIcon" class="fa-solid fa-circle-check"></i>
+
+        <span id="toastMessage">
+            Berhasil!
+        </span>
+
+    </div>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>
+```
