@@ -1,4 +1,4 @@
-```javascript
+
 /* ==========================================
    SERVICE WORKER
    SISTEM INVENTARIS RUANGAN
@@ -152,4 +152,4 @@ self.addEventListener(
 
     }
 );
-```
+
